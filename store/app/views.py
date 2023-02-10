@@ -1,12 +1,7 @@
-from django.http import HttpResponse, request
 from django.shortcuts import render
 from django.views import generic
 
 from .models import Item
-
-#
-# def index(request):
-#     return render(request, 'app/index.html')
 
 
 class IndexView(generic.ListView):
@@ -20,3 +15,20 @@ class IndexView(generic.ListView):
 class DetailView(generic.DetailView):
     model = Item
     template_name = 'app/detail.html'
+
+
+def buy(request, pk):
+    if request.method == "POST":
+        context = {'item_id': pk,
+                   }
+        return render(request, 'app/buy.html', context=context)
+    else:
+        return render(request, 'app/index.html', context=context)
+
+
+def success(request):
+    pass
+
+
+def cancel(request):
+    pass
