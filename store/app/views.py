@@ -1,4 +1,5 @@
 import stripe
+from django.http import HttpResponseRedirect
 from django.shortcuts import render
 from django.views import generic
 
@@ -19,15 +20,10 @@ class DetailView(generic.DetailView):
 
 
 def buy(request, pk):
-    item = Item.objects.get(pk=pk)
-    session = create_checkout_session(item)
-    context = {'item_id': pk,
-               'session_id': session,
-               }
     if request.method == "GET":
-        return render(request, 'app/buy.html', context=context)
-    else:
-        return render(request, 'app/index.html', context=context)
+        item = Item.objects.get(pk=pk)
+        session = create_checkout_session(item)
+        return HttpResponseRedirect(session)
 
 
 def create_checkout_session(item):
@@ -50,7 +46,7 @@ def create_checkout_session(item):
             ],
             currency=item.currency.lower(),
             mode='payment',
-            success_url='http://localhost:8000/success.html',
+            success_url='http://localhost:8000/success',
         )
         return checkout_session.url
     except Exception as error:
@@ -58,7 +54,7 @@ def create_checkout_session(item):
 
 
 def success(request):
-    pass
+    return render(request, 'app/success.html')
 
 
 def cancel(request):
