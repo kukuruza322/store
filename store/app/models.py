@@ -2,6 +2,9 @@ from django.db import models
 
 
 class Item(models.Model):
+    """
+    Описание товара.
+    """
     currencies = (
         ("RUB", "RUB"),
         ("USD", "USD"),
@@ -18,6 +21,9 @@ class Item(models.Model):
 
 
 class Cart(models.Model):
+    """
+    Модель для добавления товаров, хранения и подготовки списка товаров к оформлению заказа.
+    """
     item_id = models.ForeignKey(Item, on_delete=models.CASCADE)
     amount = models.IntegerField(default=0, verbose_name="Количество")
     subtotal = models.IntegerField(verbose_name="Стоимость")
@@ -29,11 +35,18 @@ class Discount(models.Model):
 
 
 class Country(models.Model):
+    """
+    Модель "Country" вместо предлагаемой "Tax" для возможности пересчета ставки налога в процессе оплаты
+    в зависимости от страны респондента.
+    """
     country = models.CharField(max_length=100, verbose_name="Страна", unique=True)
     tax_rate = models.IntegerField(verbose_name="Размер налога")
 
 
 class Order(models.Model):
+    """
+    Модель заказов на основе товаров из корзины, т.е. список товаров хранится в cart_id.
+    """
     creation_date = models.DateField(auto_now_add=True, verbose_name="Дата заказа")
     total = models.IntegerField(verbose_name="Общая стоимость")
     total_with_tax_and_sale = models.IntegerField(verbose_name="Итого")

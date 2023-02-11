@@ -7,11 +7,13 @@
 </head>
 
 <body>
-<h1>Hello world!</h1>
-<h1>There are the latest 10 items. Hurry up to buy on!</h1>
-{% for item in latest_item_list %}
-<a href="/item/{{ item.id }}/">{{ item }}</a>
-{% endfor %}
+<h2>Привет!</h2>
+<h2>Это список доступных товаров:</h2>
+    {% for item in latest_item_list %}
+        <li><a href="/item/{{ item.id }}/">{{ item }}</a></li>
+    {% empty %}
+        <li>Товаров пока нет! Вы можете их добавить через панель администратора.</li>
+    {% endfor %}
 </body>
 
 </html>

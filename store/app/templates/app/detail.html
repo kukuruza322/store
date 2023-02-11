@@ -9,9 +9,8 @@
     <h1>{{ item }}</h1>
     <form action="/buy/{{ item.id }}/" method="GET">
         {% csrf_token %}
-      <button type="submit">Checkout</button>
+        <button type="submit">Купить в 1 клик</button>
     </form>
 </body>
-
 
 </html>
