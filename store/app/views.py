@@ -1,11 +1,12 @@
 import stripe
 from django.http import HttpResponseRedirect
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
 from django.views import generic
-from django.views.decorators.http import require_GET
+from django.views.decorators.http import require_GET, require_POST
 import random
 
 from .models import Item
+from .cart import Cart
 
 
 class IndexView(generic.ListView):
@@ -99,3 +100,10 @@ def success(request):
 
 def cancel(request):
     return render(request, 'app/cancel.html')
+
+
+@require_POST
+def add(request, pk):
+    cart = Cart(request)
+    cart.add(pk=pk)
+    return render(request, 'app/success.html')

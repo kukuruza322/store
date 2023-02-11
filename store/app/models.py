@@ -12,22 +12,13 @@ class Item(models.Model):
     )
     name = models.CharField(max_length=50, verbose_name="Наименование")
     description = models.TextField(max_length=500, verbose_name="Описание")
-    price = models.IntegerField(default=0, verbose_name="Цена")
+    price = models.DecimalField(default=0, max_digits=6, decimal_places=0, verbose_name="Цена")
     currency = models.CharField(max_length=20, choices=currencies, default="RUB", verbose_name="Валюта")
     add_date = models.DateField(auto_now_add=True, verbose_name="Дата поступления")
     stock_amount = models.IntegerField(default=0, verbose_name="Количество на складе")
 
     def __str__(self):
         return f"{self.name}, {str(self.price)} {self.currency}"
-
-
-class Cart(models.Model):
-    """
-    Модель для добавления товаров, хранения и подготовки списка товаров к оформлению заказа.
-    """
-    item_id = models.ForeignKey(Item, on_delete=models.CASCADE)
-    buy_amount = models.IntegerField(default=0, verbose_name="Количество")
-    buy_subtotal = models.IntegerField(verbose_name="Стоимость")
 
 
 class Discount(models.Model):
@@ -46,12 +37,10 @@ class Country(models.Model):
 
 class Order(models.Model):
     """
-    Модель заказов на основе товаров из корзины, т.е. список товаров хранится в cart_id.
+    Модель для добавления товаров и подготовки списка товаров к оформлению заказа.
     """
-    creation_date = models.DateField(auto_now_add=True, verbose_name="Дата заказа")
-    total = models.IntegerField(verbose_name="Общая стоимость")
-    total_with_tax_and_sale = models.IntegerField(verbose_name="Итого")
-    cart_id = models.ForeignKey(Cart, verbose_name="Список товаров", on_delete=models.CASCADE)
+    item = models.ForeignKey(Item, on_delete=models.CASCADE)
+    buy_amount = models.IntegerField(default=0, verbose_name="Количество")
     discount = models.ForeignKey(Discount, verbose_name="Персональная скидка", on_delete=models.CASCADE)
     address = models.ForeignKey(Country, verbose_name="Адрес доставки", on_delete=models.CASCADE)
 

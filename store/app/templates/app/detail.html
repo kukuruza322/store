@@ -11,6 +11,11 @@
         {% csrf_token %}
         <button type="submit">Купить в 1 клик</button>
     </form>
+
+    <form action="/add/{{ item.id }}/" method="POST">
+        {% csrf_token %}
+        <button type="submit">Добавить в корзину</button>
+    </form>
 </body>
 
 </html>
