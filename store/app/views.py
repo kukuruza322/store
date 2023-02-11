@@ -1,12 +1,12 @@
 import stripe
+from django.db import transaction
 from django.http import HttpResponseRedirect
 from django.shortcuts import render, get_object_or_404
 from django.views import generic
 from django.views.decorators.http import require_GET, require_POST
 import random
 
-from .models import Item
-from .cart import Cart
+from .models import Item, Order, Country, Discount, Cart
 
 
 class IndexView(generic.ListView):
@@ -22,13 +22,20 @@ class DetailView(generic.DetailView):
     template_name = 'app/detail.html'
 
 
+@transaction.atomic
 @require_GET
 def buy(request, pk):
     """
     Возвращает перенаправление на страницу оплаты напрямую, вместо возвращения session.id + переход с помощью JS
     """
+    # ordered_item = Order.objects.create(cart_id, buy_amount=buy_amount, subtotal=buy_amount * selected_item.price,
+                                        # discount=discount, address=country)
+    # ordered_item.save()
+
     item = Item.objects.get(pk=pk)
     session = create_checkout_session(item)
+    Cart.objects.all().delete()
+
     return HttpResponseRedirect(session.url)
 
 
@@ -104,6 +111,11 @@ def cancel(request):
 
 @require_POST
 def add(request, pk):
-    cart = Cart(request)
-    cart.add(pk=pk)
-    return render(request, 'app/success.html')
+    amount = 1
+    selected_item = Item.objects.get(pk=pk)
+    if selected_item in Cart.objects.filter(pk=pk):
+        Cart.objects.get(pk=pk).update(amount=amount + 1)
+    else:
+        item_in_cart = Cart.objects.create(item=selected_item, amount=amount, subtotal=amount*selected_item.price)
+        item_in_cart.save()
+    return render(request, 'app/success.html')   # вернуть другой шаблон

@@ -1,4 +1,3 @@
-from .models import Item
 
 
 class Cart(object):
@@ -25,11 +24,7 @@ class Cart(object):
 
     def add(self, pk, quantity=1):
         # добавление товара
-        item = Item.objects.get(pk=pk)  # get_object_or_404(Item, pk=pk)
-        if pk not in self.cart:
-            self.cart[pk] = {'quantity': 0, 'price': str(item.price)}
-        else:
-            self.cart[pk]['quantity'] += quantity
+        pass
 
     def remove(self):
         # удаление товара
