@@ -36,16 +36,17 @@ def create_checkout_session(item):
     Создает Stripe-объекты на основе количества товаров из корзины, выбранной страны и валюты.
     """
     stripe.api_key = 'sk_test_51MZw3sGWkXptNC3XZjlcZQM4nRZUnhDLwhKMtPNGYhotxXKHZFksmuwxWCCN3Gp0HQCdnX6YjBbQrdQrqPXS7XOd00Ci0ku2Fk'
-    COUNTRY = random.choice(['RU'])  # (['AU', 'DE', 'FI', 'AT', 'FR'])
+    COUNTRY = random.choice(['AU', 'DE', 'FI', 'AT', 'FR'])
     SALE = 25
+    TAX = 20
     CURRENCY = item.currency.lower()
     NAME = "Petr"
 
     tax = stripe.TaxRate.create(display_name="НДС",
                                 inclusive=False,
-                                percentage=7.25,
-                                country="US",
-                                description="US Sales Tax",
+                                percentage=TAX,
+                                country=COUNTRY,
+                                description=f"{COUNTRY} Sales Tax",
                                 )
 
     customer = stripe.Customer.create(description="Default User",
@@ -77,7 +78,7 @@ def create_checkout_session(item):
             },
         ],
         automatic_tax={
-            # Enable this and select country from ['AU', 'DE', 'FI', 'AT', 'FR'] for automated calc of taxes
+            # Enable this for automated calc of taxes based on chosen Dashboard settings
             'enabled': False,
         },
         currency=CURRENCY,
