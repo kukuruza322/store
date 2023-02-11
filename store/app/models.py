@@ -15,6 +15,7 @@ class Item(models.Model):
     price = models.IntegerField(default=0, verbose_name="Цена")
     currency = models.CharField(max_length=20, choices=currencies, default="RUB", verbose_name="Валюта")
     add_date = models.DateField(auto_now_add=True, verbose_name="Дата поступления")
+    stock_amount = models.IntegerField(default=0, verbose_name="Количество на складе")
 
     def __str__(self):
         return f"{self.name}, {str(self.price)} {self.currency}"
@@ -25,8 +26,8 @@ class Cart(models.Model):
     Модель для добавления товаров, хранения и подготовки списка товаров к оформлению заказа.
     """
     item_id = models.ForeignKey(Item, on_delete=models.CASCADE)
-    amount = models.IntegerField(default=0, verbose_name="Количество")
-    subtotal = models.IntegerField(verbose_name="Стоимость")
+    buy_amount = models.IntegerField(default=0, verbose_name="Количество")
+    buy_subtotal = models.IntegerField(verbose_name="Стоимость")
 
 
 class Discount(models.Model):
