@@ -13,13 +13,9 @@ from .models import Item, Order, Country, Discount, Cart
 @require_GET
 def index(request):
     latest_item_list = Item.objects.order_by('-add_date')[:10]
-    cart_list = Item.objects.raw('SELECT app_item.id, name, description, price, currency, amount, subtotal FROM app_item INNER JOIN app_cart ON (app_cart.item_id=app_item.id)')
-    total = Cart.objects.all().aggregate(sum=Sum('subtotal'))
-    chosen_currency = 'RUB'
+    cart_count = Cart.objects.count()
     context = {'latest_item_list': latest_item_list,
-               'cart_list': cart_list,
-               'total':total,
-               'currency':chosen_currency,
+               'cart_count': cart_count,
                }
     return render(request, 'app/index.html', context=context)
 
@@ -135,5 +131,23 @@ def add(request, pk):
     return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
 
 
-def alter(request):
-    return render(request, 'app/index_alter.html')
+def history(request):
+    return render(request, 'app/history.html')
+
+
+def cart(request):
+    cart_list = Item.objects.raw('SELECT app_item.id, name, description, price, currency, amount, subtotal '
+                                 'FROM app_item '
+                                 'INNER JOIN app_cart ON (app_cart.item_id=app_item.id)')
+    total = Cart.objects.all().aggregate(sum=Sum('subtotal'))
+    chosen_currency = 'RUB'
+    context = {
+               'cart_list': cart_list,
+               'total': total,
+               'currency': chosen_currency,
+               }
+    return render(request, 'app/cart.html', context=context)
+
+
+def about(request):
+    return render(request, 'app/about.html')

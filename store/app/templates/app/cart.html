@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+    <table class="table">
+      <thead>
+        <tr>
+            <th scope="col">#</th>
+            <th scope="col">Наименование</th>
+            <th scope="col">Цена</th>
+            <th scope="col">Количество</th>
+            <th scope="col">Стоимость</th>
+        </tr>
+      </thead>
+      <tbody>
+            {% for item in cart_list %}
+            <tr>
+                <td></td>
+                <td><a href="/item/{{ item.id }}/">{{ item }}</a></td>
+                <td>{{ item.price }}</td>
+                <td>{{ item.amount }}</td>
+                <td>{{ item.subtotal }}</td>
+            </tr>
+            {% empty %}
+                <li>Корзина пуста.</li>
+            {% endfor %}
+      </tbody>
+    </table>
+
+Общая стоимость товаров в корзине:
+    {% if total.sum %}
+        {{ total.sum }} {{ currency }}
+    {% else %}
+        0 {{ currency }}
+    {% endif %}
+
+    <form action="/buy/all/" method="POST">
+        {% csrf_token %}
+        <button type="submit">Перейти к оформлению заказа</button>
+    </form>
+</body>
+</html>
