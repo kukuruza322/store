@@ -1,10 +1,29 @@
 <!DOCTYPE html>
+{% extends 'app/index.html' %}
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
 </head>
 <body>
-    <a href="https://t.me/usm322">Мой телеграм.</a>
+{% block cart %}
+{% endblock %}
+{% block title %}
+    <p class="lead fw-normal text-white-50 mb-0">Здесь размещены мои контакты в Телеграм, Гитхаб и Кодварс. </p>
+{% endblock %}
+{% block house %}
+
+
+<input type="button" class="btn btn-primary" style="width: 150px;" onclick="location.href='https://t.me/usm322'" value="Telegram" />
+
+<input type="button" class="btn btn-dark" style="width: 150px;" onclick="location.href='https://github.com/kukuruza322';" value="GitHub" />
+
+<input type="button" class="btn btn-danger" style="width: 150px;" onclick="location.href='https://www.codewars.com/users/kukuruza322';" value="Codewars" />
+
+
+
+{% endblock %}
+
+
 </body>
 </html>

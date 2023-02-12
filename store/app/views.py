@@ -132,7 +132,11 @@ def add(request, pk):
 
 
 def history(request):
-    return render(request, 'app/history.html')
+    order_list = Order.objects.all()
+    context = {
+               'order_list': order_list,
+               }
+    return render(request, 'app/history.html', context=context)
 
 
 def cart(request):

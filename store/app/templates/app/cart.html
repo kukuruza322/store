@@ -1,14 +1,20 @@
 <!DOCTYPE html>
+{% extends 'app/index.html' %}
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
 </head>
 <body>
+{% block cart %}
+{% endblock %}
+{% block title %}
+    <p class="lead fw-normal text-white-50 mb-0">Вы перешли в корзину. Для оформления заказа или очистки корзины нажмите соответствующую кнопку.</p>
+{% endblock %}
+{% block house %}
     <table class="table">
       <thead>
         <tr>
-            <th scope="col">#</th>
             <th scope="col">Наименование</th>
             <th scope="col">Цена</th>
             <th scope="col">Количество</th>
@@ -18,28 +24,35 @@
       <tbody>
             {% for item in cart_list %}
             <tr>
-                <td></td>
-                <td><a href="/item/{{ item.id }}/">{{ item }}</a></td>
+                <td><b><a class="shadow-text" style="text-decoration: none; color: #000000" href="/item/{{ item.id }}/">{{ item }}</a></b></td>
                 <td>{{ item.price }}</td>
                 <td>{{ item.amount }}</td>
                 <td>{{ item.subtotal }}</td>
             </tr>
             {% empty %}
-                <li>Корзина пуста.</li>
+                <p>Корзина пуста.</p>
             {% endfor %}
       </tbody>
     </table>
+        <form action="/buy/all/" method="POST">
+            {% csrf_token %}
+            <button type="submit" class="btn btn-outline-danger mt-auto" style="ba ">Очистить корзину</button>
+        </form>
+        <div>
+        Общая стоимость товаров в корзине:
+        {% if total.sum %}
+            <b>{{ total.sum }} {{ currency }}</b>
+        {% else %}
+            0 {{ currency }}
+        {% endif %}
+        </div>
+        <form action="/buy/all/" method="POST">
+            {% csrf_token %}
+            <button type="submit" class="btn btn-outline-success mt-auto" >Перейти к оформлению заказа</button>
+        </form>
 
-Общая стоимость товаров в корзине:
-    {% if total.sum %}
-        {{ total.sum }} {{ currency }}
-    {% else %}
-        0 {{ currency }}
-    {% endif %}
+{% endblock %}
 
-    <form action="/buy/all/" method="POST">
-        {% csrf_token %}
-        <button type="submit">Перейти к оформлению заказа</button>
-    </form>
+
 </body>
 </html>

@@ -24,12 +24,12 @@
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <ul class="navbar-nav me-auto mb-2 mb-lg-0 ms-lg-4">
-                        <li class="nav-item"><a class="nav-link" href="cart/">Перейти в корзину</a></li>
-                        <li class="nav-item"><a class="nav-link" href="history/">История заказов</a></li>
-                        <li class="nav-item"><a class="nav-link" href="admin/">Панель администратора</a></li>
-                        <li class="nav-item"><a class="nav-link" href="about/">Мои контакты</a></li>
-
+                        <li class="nav-item"><a class="nav-link" href="{% url 'cart' %}">Перейти в корзину</a></li>
+                        <li class="nav-item"><a class="nav-link" href="{% url 'history' %}">История заказов</a></li>
+                        <li class="nav-item"><a class="nav-link" href="{% url 'about' %}">Мои контакты</a></li>
+                        <li class="nav-item"><a class="nav-link" href="{% url 'admin:index' %}">Панель администратора</a></li>
                     </ul>
+                    {% block cart %}
                     <form class="d-flex" action="cart/" method="GET">
                         <button class="btn btn-outline-dark" type="submit">
                             <i class="bi-cart-fill me-1"></i>
@@ -37,6 +37,7 @@
                             <span class="badge bg-dark text-white ms-1 rounded-pill">{{ cart_count }}</span>
                         </button>
                     </form>
+                    {% endblock %}
                 </div>
             </div>
         </nav>
@@ -45,14 +46,18 @@
             <div class="container px-4 px-lg-5 my-5">
                 <div class="text-center text-white">
                     <h1 class="display-4 fw-bolder">USM Fake store</h1>
+                    {% block title %}
                     <p class="lead fw-normal text-white-50 mb-0">Добро пожаловать! Вы находитесь на главной странице магазина.</p>
+                    {% endblock %}
                 </div>
             </div>
         </header>
         <!-- Section-->
         <section class="py-5">
             <div class="container px-4 px-lg-5 mt-5">
+
                 <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
+                {% block house %}
                 {% for item in latest_item_list %}
                     <!-- THIS IS ITEM -->
                     <div class="col mb-5">
@@ -98,8 +103,9 @@
                         <p class="lead fw-normal text-black-50 mb-0">Товаров пока нет. Но Вы можете их добавить через панель администратора!</p>
                     </div>
                 {% endfor %}
-
+                {% endblock %}
                 </div>
+
             </div>
         </section>
         <!-- Footer-->

@@ -1,15 +1,44 @@
 <!DOCTYPE html>
+{% extends 'app/index.html' %}
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
 </head>
 <body>
-    <h2>История заказов:</h2>
-        {% for item in latest_item_list %}
-            <li><a href="/item/{{ item.id }}/">{{ item }}</a></li>
-        {% empty %}
-            Нет оформленных заказов.
-        {% endfor %}
+{% block cart %}
+{% endblock %}
+{% block title %}
+    <p class="lead fw-normal text-white-50 mb-0">Здесь размещена история ранее оформленных заказов. </p>
+{% endblock %}
+{% block house %}
+    <table class="table">
+      <thead>
+        <tr>
+            <th scope="col">Номер заказа</th>
+            <th scope="col">Дата оформления</th>
+            <th scope="col">Стоимость без скидки и налогов</th>
+            <th scope="col">Размер скидки</th>
+            <th scope="col">Налог, %</th>
+            <th scope="col">Итоговая стоимость</th>
+        </tr>
+      </thead>
+      <tbody>
+            {% for order in order_list %}
+            <tr>
+                <td><b><a class="shadow-text" style="text-decoration: none; color: #000000" href="/item/{{ item.id }}/">{{ item }}</a></b></td>
+                <td>{{ order.id }}</td>
+                <td>{{ order.creation_date }}</td>
+                <td>{{ order.total }}</td>
+                <td>{{ order.discount }}</td>
+                <td>{{ order.tax }}</td>
+                <td>{{ order.total_with_tax_and_sale }}</td>
+            </tr>
+            {% empty %}
+                <p>Нет оформленных заказов.</p>
+            {% endfor %}
+      </tbody>
+    </table>
+{% endblock %}
 </body>
 </html>
