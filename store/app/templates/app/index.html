@@ -71,7 +71,7 @@
                                 <div class="text-center">
                                     <!-- Product name-->
                                     <h5 class="fw-bolder">
-                                        <a href="/item/{{ item.id }}/" style="text-decoration: none; color: #000000">{{ item }}</a>
+                                        <a href="/item/{{ item.id }}/" class="link-secondary" style="text-decoration: none;">{{ item }}</a>
                                     </h5>
                                     <!-- Product reviews-->
                                     <div class="d-flex justify-content-center small text-warning mb-2">
@@ -91,7 +91,7 @@
                                 <div class="text-center">
                                     <form action="/add/{{ item.id }}/" method="POST">
                                         {% csrf_token %}
-                                        <button type="submit" class="btn btn-outline-dark mt-auto">Добавить в корзину</button>
+                                        <button type="submit" class="btn btn-outline-success mt-auto">Добавить в корзину</button>
                                     </form>
                                 </div>
                             </div>

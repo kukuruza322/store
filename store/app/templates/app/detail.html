@@ -1,23 +1,38 @@
 <!DOCTYPE html>
+{% extends 'app/index.html' %}
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Detail item info</title>
+    <title>Title</title>
 </head>
-
 <body>
-    <a href="/">На главную страницу</a>
-
-    <h1>{{ item }}</h1>
-    <form action="/buy/{{ item.id }}/" method="POST">
-        {% csrf_token %}
-        <button type="submit">Купить в 1 клик</button>
-    </form>
-
-    <form action="/add/{{ item.id }}/" method="POST">
-        {% csrf_token %}
-        <button type="submit">Добавить в корзину</button>
-    </form>
+{% block cart %}
+{% endblock %}
+{% block title %}
+    <p class="lead fw-normal text-white-50 mb-0">Детальная информация по товару.</p>
+{% endblock %}
+{% block house %}
+    <div class="col-md-8"><img class="card-img-top mb-5 mb-md-0" src="https://dummyimage.com/600x700/dee2e6/6c757d.jpg" alt="..." /></div>
+    <div class="col-md-8">
+        <div class="small col-md-8" style="width: 1500">SKU: {{ item.id }}</div>
+        <h3 class="display-7 fw-bolder">{{ item.name }}</h3>
+        <div class="fs-8 mb-8">
+            <span class="text-decoration-line-through">{{ item.price }}{{ item.currency }}</span>
+            <span>{{ item.price }}{{ item.currency }}</span>
+        </div>
+        <p class="lead">{{ item.description }}</p>
+        <div class="form-inline">
+            <form action="/add/{{ item.id }}/" method="POST">
+                {% csrf_token %}
+                <input type="number" class="form-control text-center me-1" id="inputQuantity"  value="1" style="max-width: 3rem"/>
+                <button type="submit" class="btn btn-outline-success mt-auto" >В корзину</button>
+            </form>
+            <form action="/buy/{{ item.id }}/" method="POST">
+                {% csrf_token %}
+                <button type="submit" class="btn btn-outline-dark mt-auto">Заказ в 1 клик</button>
+            </form>
+        </div>
+    </div>
+{% endblock %}
 </body>
-
 </html>

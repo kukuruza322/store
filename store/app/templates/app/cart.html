@@ -12,47 +12,47 @@
     <p class="lead fw-normal text-white-50 mb-0">Вы перешли в корзину. Для оформления заказа или очистки корзины нажмите соответствующую кнопку.</p>
 {% endblock %}
 {% block house %}
+    {% if cart_list %}
     <table class="table">
       <thead>
         <tr>
-            <th scope="col">Наименование</th>
-            <th scope="col">Цена</th>
-            <th scope="col">Количество</th>
-            <th scope="col">Стоимость</th>
+            <th class=text-center scope="col">Наименование</th>
+            <th class=text-center scope="col">Цена</th>
+            <th class=text-center scope="col">Количество</th>
+            <th class=text-center scope="col">Стоимость</th>
         </tr>
       </thead>
       <tbody>
             {% for item in cart_list %}
             <tr>
-                <td><b><a class="shadow-text" style="text-decoration: none; color: #000000" href="/item/{{ item.id }}/">{{ item }}</a></b></td>
-                <td>{{ item.price }}</td>
-                <td>{{ item.amount }}</td>
-                <td>{{ item.subtotal }}</td>
+                <td class="text-center"><b><a class="link-secondary" style="text-decoration: none;" href="/item/{{ item.id }}/">{{ item }}</a></b></td>
+                <td class="text-center">{{ item.price }}</td>
+                <td class="text-center">{{ item.amount }}</td>
+                <td class="text-center">{{ item.subtotal }}</td>
             </tr>
-            {% empty %}
-                <p>Корзина пуста.</p>
             {% endfor %}
       </tbody>
     </table>
+    {% else %}
+        <p>Корзина пуста.</p>
+    {% endif %}
         <form action="{% url 'cart_flush' %}" method="GET">
             {% csrf_token %}
             <button type="submit" class="btn btn-outline-danger mt-auto">Очистить корзину</button>
         </form>
-        <div>
-        Общая стоимость товаров в корзине:
-        {% if total.sum %}
-            <b>{{ total.sum }} {{ currency }}</b>
-        {% else %}
-            0 {{ currency }}
-        {% endif %}
-        </div>
+            <div>
+                Общая стоимость товаров в корзине:
+                {% if total.sum %}
+                    <b>{{ total.sum }} {{ currency }}</b>
+                {% else %}
+                    0 {{ currency }}
+                {% endif %}
+            </div>
         <form action="/buy/all/" method="POST">
             {% csrf_token %}
             <button type="submit" class="btn btn-outline-success mt-auto" >Перейти к оформлению заказа</button>
         </form>
-
 {% endblock %}
-
 
 </body>
 </html>
