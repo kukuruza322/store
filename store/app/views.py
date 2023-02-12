@@ -153,5 +153,10 @@ def cart(request):
     return render(request, 'app/cart.html', context=context)
 
 
+def cart_flush(request):
+    Cart.objects.all().delete()
+    return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
+
+
 def about(request):
     return render(request, 'app/about.html')

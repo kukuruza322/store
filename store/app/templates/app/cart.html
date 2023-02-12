@@ -34,9 +34,9 @@
             {% endfor %}
       </tbody>
     </table>
-        <form action="/buy/all/" method="POST">
+        <form action="{% url 'cart_flush' %}" method="GET">
             {% csrf_token %}
-            <button type="submit" class="btn btn-outline-danger mt-auto" style="ba ">Очистить корзину</button>
+            <button type="submit" class="btn btn-outline-danger mt-auto">Очистить корзину</button>
         </form>
         <div>
         Общая стоимость товаров в корзине:
