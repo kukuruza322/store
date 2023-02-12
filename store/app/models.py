@@ -18,7 +18,7 @@ class Item(models.Model):
     stock_amount = models.IntegerField(default=0, verbose_name="Количество на складе")
 
     def __str__(self):
-        return f"{self.name}, {str(self.price)} {self.currency}"
+        return f"{self.name}"
 
 
 class Cart(models.Model):

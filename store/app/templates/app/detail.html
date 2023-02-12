@@ -6,8 +6,10 @@
 </head>
 
 <body>
+    <a href="/">На главную страницу</a>
+
     <h1>{{ item }}</h1>
-    <form action="/buy/{{ item.id }}/" method="GET">
+    <form action="/buy/{{ item.id }}/" method="POST">
         {% csrf_token %}
         <button type="submit">Купить в 1 клик</button>
     </form>
