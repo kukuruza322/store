@@ -48,7 +48,7 @@
                     0 {{ currency }}
                 {% endif %}
             </div>
-        <form action="/buy/all/" method="POST">
+        <form action="{% url 'checkout' %}" method="POST">
             {% csrf_token %}
             <button type="submit" class="btn btn-outline-success mt-auto" >Перейти к оформлению заказа</button>
         </form>
