@@ -8,58 +8,58 @@
 </head>
 
 <body>
-<h2>Привет!</h2>
-<h2>Это список доступных товаров:</h2>
-    {% for item in latest_item_list %}
-        <li><a href="/item/{{ item.id }}/">{{ item }}</a></li>
-    {% empty %}
-        <li>Товаров пока нет! Вы можете их добавить через панель администратора.</li>
-    {% endfor %}
-
-<h2>Товары в вашей корзине:</h2>
-
-<table class="table">
-  <thead>
-    <tr>
-        <th scope="col">#</th>
-        <th scope="col">Наименование</th>
-        <th scope="col">Цена</th>
-        <th scope="col">Количество</th>
-        <th scope="col">Стоимость</th>
-    </tr>
-  </thead>
-  <tbody>
-        {% for item in cart_list %}
-        <tr>
-            <td></td>
-            <td><a href="/item/{{ item.id }}/">{{ item }}</a></td>
-            <td>{{ item.price }}</td>
-            <td>{{ item.amount }}</td>
-            <td>{{ item.subtotal }}</td>
-        </tr>
+    <h2>Привет!</h2>
+    <h2>Это список доступных товаров:</h2>
+        {% for item in latest_item_list %}
+            <li><a href="/item/{{ item.id }}/">{{ item }}</a></li>
         {% empty %}
-            <li>Корзина пуста.</li>
+            <li>Товаров пока нет! Вы можете их добавить через панель администратора.</li>
         {% endfor %}
 
-  </tbody>
-</table>
-Общая стоимость товаров в корзине: {{ total.sum }} {{ currency }}
+    <h2>Товары в вашей корзине:</h2>
+    <table class="table">
+      <thead>
+        <tr>
+            <th scope="col">#</th>
+            <th scope="col">Наименование</th>
+            <th scope="col">Цена</th>
+            <th scope="col">Количество</th>
+            <th scope="col">Стоимость</th>
+        </tr>
+      </thead>
+      <tbody>
+            {% for item in cart_list %}
+            <tr>
+                <td></td>
+                <td><a href="/item/{{ item.id }}/">{{ item }}</a></td>
+                <td>{{ item.price }}</td>
+                <td>{{ item.amount }}</td>
+                <td>{{ item.subtotal }}</td>
+            </tr>
+            {% empty %}
+                <li>Корзина пуста.</li>
+            {% endfor %}
+      </tbody>
+    </table>
+    Общая стоимость товаров в корзине:
+    {% if total.sum %}
+        {{ total.sum }} {{ currency }}
+    {% else %}
+        0 {{ currency }}
+    {% endif %}
 
-
-
-    <p></p>
 
     <form action="/buy/all/" method="POST">
         {% csrf_token %}
-        <button type="submit">Оформить заказ из товаров в корзине</button>
+        <button type="submit">Перейти к оформлению заказа</button>
     </form>
 
-<h2>История заказов:</h2>
-    {% for item in latest_item_list %}
-        <li><a href="/item/{{ item.id }}/">{{ item }}</a></li>
-    {% empty %}
-        <li>Нет оформленных заказов.</li>
-    {% endfor %}
+    <h2>История заказов:</h2>
+        {% for item in latest_item_list %}
+            <li><a href="/item/{{ item.id }}/">{{ item }}</a></li>
+        {% empty %}
+            <li>Нет оформленных заказов.</li>
+        {% endfor %}
 
 </body>
 
