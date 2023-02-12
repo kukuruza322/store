@@ -133,3 +133,7 @@ def add(request, pk):
         item_in_cart = Cart.objects.create(item=selected_item, amount=amount, subtotal=amount*selected_item.price)
         item_in_cart.save()
     return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
+
+
+def alter(request):
+    return render(request, 'app/index_alter.html')
