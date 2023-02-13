@@ -1,13 +1,16 @@
-import stripe
+import stripe, environ
 from django.db import transaction
 from django.db.models import Sum
 from django.http import HttpResponseRedirect, HttpResponse
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render
 from django.views import generic
 from django.views.decorators.http import require_GET, require_POST
 
 from .models import Item, Order, Cart
-from ..store.settings import env
+
+
+env = environ.Env()
+environ.Env.read_env()
 
 
 @require_GET
@@ -71,7 +74,6 @@ def create_checkout_session_many(item_list, country='RU', sale='10', tax=20, cur
     """
     Оформить заказ на всю корзину
     """
-
     stripe.api_key = env('STRIPE_API_KEY')
     products = []
     prices = []
