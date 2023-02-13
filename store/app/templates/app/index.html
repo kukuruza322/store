@@ -123,12 +123,10 @@
 
 <script type="text/javascript">
     var buyButton = document.getElementById('buy-button');
-    buyButton.addEventListener('click', handler())
-
-    function handler() {
+    buyButton.addEventListener('click', function(){
         // Call your backend to create the Checkout Session
-        fetch('/api-buy/', {
-          method: 'POST',
+        fetch('api-buy/', {
+          method: 'GET',
         })
         .then(function(response) {
           return response.json();
@@ -143,11 +141,6 @@
               if (result.error) {
                 alert(result.error.message);
               }
+            })
         })
-    }
-
-    function alertFunction() {
-      alert("Hello there!");
-    }
-
 </script>

@@ -1,15 +1,30 @@
 <!DOCTYPE html>
-<html>
+{% extends 'app/index.html' %}
+<html lang="en">
 <head>
-  <title>Успешно!</title>
+    <meta charset="UTF-8">
+    <title>Title</title>
 </head>
 <body>
-  <h2>Оплата успешно завершена. Спасибо за заказ!</h2>
-</body>
-</html>
+{% block cart %}
+{% endblock %}
+
+{% block title %}
+    <p class="lead fw-normal text-white-50 mb-0">Спасибо за заказ!</p>
+{% endblock %}
+{% block house %}
+
+<div class="center-block">
+    <h3>Оплата успешно завершена! Сейчас вы будете перенаправлены на главную страницу. </h3>
+</div>
 
 <script>
        setTimeout(function(){
             window.location.href = "{% url 'index' %}";
          }, 3000);
 </script>
+
+{% endblock %}
+
+</body>
+</html>

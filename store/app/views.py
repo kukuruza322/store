@@ -39,7 +39,7 @@ def buy_one(request, pk):
 
 
 @transaction.atomic
-@require_POST
+@require_GET
 def api_buy(request, pk):
     """
     Возвращает Session ID для API
@@ -47,15 +47,15 @@ def api_buy(request, pk):
     item_list = Item.objects.filter(pk=pk)
     currency = item_list[0].currency
     session = create_checkout_session_many(item_list, currency=currency)
-    context = {"session": session}
-    return HttpResponse(request)
+    return HttpResponse(session.id)
 
 
 @transaction.atomic
 @require_POST
 def buy_all(request):
     """
-    Возвращает перенаправление на страницу оплаты напрямую, вместо возвращения session.id + переход с помощью JS
+    Возвращает перенаправление на страницу оплаты напрямую,
+    вместо возвращения session.id + переход на страницу оплаты с помощью JS
     """
     item_list = Item.objects.raw('SELECT app_item.id, name, description, price, currency, amount, subtotal '
                                  'FROM app_item '
