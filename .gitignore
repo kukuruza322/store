@@ -1,3 +1,4 @@
 /venv/
 /store/db.sqlite3
 /.idea/.gitignore
+/store/store/.env

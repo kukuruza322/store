@@ -83,7 +83,7 @@
                                     </div>
                                     <!-- Product price-->
                                     <span class="text-muted text-decoration-line-through">{{ item.price }}</span>
-                                    {{ item.price }} {{ item.currency }}
+                                    {{ item.price }}{{ item.currency }}
                                 </div>
                             </div>
                             <!-- Product actions-->
@@ -105,8 +105,6 @@
                 {% endfor %}
                 {% endblock %}
                 </div>
-
-
             </div>
         </section>
         <!-- Footer-->
@@ -117,7 +115,6 @@
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
         <!-- Core theme JS-->
         <script src="{% static 'app/js/scripts.js' %}"></script>
-    <html>
     </body>
 </html>
 
@@ -132,7 +129,8 @@
           return response.json();
         })
         .then(function(session) {
-          return stripe.redirectToCheckout({ sessionId: session.id });
+            let stripe;
+            return stripe.redirectToCheckout({ sessionId: session.id });
         })
         .then(function(result) {
           // If `redirectToCheckout` fails due to a browser or network
