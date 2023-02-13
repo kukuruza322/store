@@ -589,8 +589,8 @@ progress {
 }
 
 .blockquote-footer {
-  position: fixed;
-  bottom: 0;
+  margin-top: -1rem;
+  margin-bottom: 1rem;
   font-size: 0.875em;
   color: #6c757d;
 }
@@ -4574,8 +4574,6 @@ textarea.form-control-lg {
 }
 
 .card-footer {
-  position: fixed;
-  bottom: 0;
   padding: 0.5rem 1rem;
   background-color: rgba(0, 0, 0, 0.03);
   border-top: 1px solid rgba(0, 0, 0, 0.125);
@@ -5584,8 +5582,6 @@ textarea.form-control-lg {
 }
 
 .modal-footer {
-  position: fixed;
-  bottom: 0;
   display: flex;
   flex-wrap: wrap;
   flex-shrink: 0;
@@ -11290,4 +11286,3 @@ textarea.form-control-lg {
     display: none !important;
   }
 }
-

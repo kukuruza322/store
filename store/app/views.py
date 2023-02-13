@@ -7,6 +7,7 @@ from django.views import generic
 from django.views.decorators.http import require_GET, require_POST
 
 from .models import Item, Order, Cart
+from ..store.settings import env
 
 
 @require_GET
@@ -70,7 +71,8 @@ def create_checkout_session_many(item_list, country='RU', sale='10', tax=20, cur
     """
     Оформить заказ на всю корзину
     """
-    stripe.api_key = 'sk_test_51MZw3sGWkXptNC3XZjlcZQM4nRZUnhDLwhKMtPNGYhotxXKHZFksmuwxWCCN3Gp0HQCdnX6YjBbQrdQrqPXS7XOd00Ci0ku2Fk'
+
+    stripe.api_key = env('STRIPE_API_KEY')
     products = []
     prices = []
 

@@ -30,8 +30,6 @@ ALLOWED_HOSTS=[env('ALLOWED_HOSTS')]
 
 ROOT_URLCONF = env('ROOT_URLCONF')
 
-SESSION_SAVE_EVERY_REQUEST = True
-
 # Application definition
 
 INSTALLED_APPS = [
