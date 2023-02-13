@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+{% extends 'app/index.html' %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+{% block cart %}
+{% endblock %}
+{% block title %}
+    <p class="lead fw-normal text-white-50 mb-0">Проверьте данные и оплатите заказ. </p>
+{% endblock %}
+{% block house %}
+
+    <table class="table table-responsive-lg" style="width: 600px">
+    <thead>
+
+      <tr class="">
+            <th class=text-center scope="col">Наименование</th>
+            <th class=text-center scope="col">Цена</th>
+            <th class=text-center scope="col">Количество</th>
+            <th class=text-center scope="col">Стоимость</th>
+      </tr>
+    </thead>
+    <tbody>
+          {% for item in cart_list %}
+            <tr>
+              <td class="text-center" style="width: 40%">{{ item }}</td>
+              <td class="text-center" style="width: 20%">{{ item.price }} {{ item.currency }}</td>
+              <td class="text-center" style="width: 20%">х{{ item.amount }}</td>
+              <td class="text-center" style="width: 20%">{{ item.subtotal }} {{ item.currency }}</td>
+            </tr>
+          {% endfor %}
+    </tbody>
+    </table>
+
+    <form action="{% url 'buy-all' %}" method="POST">
+        {% csrf_token %}
+        <label for="tax">Введите ставку НДС в вашей стране</label>
+        <input type="number" name="tax" class="form-control text-center me-1"  value="20" min="0" max="99" style="max-width: 4rem"/>
+        <label for="sale">Введите размер скидки покупателя</label>
+        <input type="number" name="sale" class="form-control text-center me-1" value="10" min="0" max="99" style="max-width: 4rem"/>
+        <label for="currency">Выберите валюту для оплаты</label>
+        <select name="currency">
+            <option value="RUB">RUB</option>
+            <option value="USD">USD</option>
+            <option value="EUR">EUR</option>
+        </select>
+        <button type="submit" class="btn btn-outline-success mt-auto">Оплатить</button>
+    </form>
+
+{% endblock %}
+
+</body>
+</html>

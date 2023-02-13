@@ -13,29 +13,28 @@
 {% endblock %}
 {% block house %}
     {% if cart_list %}
-    <table class="table">
+    <table class="table" style="width: 1000px">
       <thead>
-        <tr>
-            <th class=text-center scope="col">Наименование</th>
-            <th class=text-center scope="col">Цена</th>
-            <th class=text-center scope="col">Количество</th>
-            <th class=text-center scope="col">Стоимость</th>
+        <tr class="bg-dark">
+            <th class=text-center scope="col" style="color: #ffffff">Наименование</th>
+            <th class=text-center scope="col" style="color: #ffffff">Цена</th>
+            <th class=text-center scope="col" style="color: #ffffff">Количество</th>
+            <th class=text-center scope="col" style="color: #ffffff">Стоимость</th>
         </tr>
       </thead>
       <tbody>
             {% for item in cart_list %}
             <tr>
                 <td class="text-center"><b><a class="link-secondary" style="text-decoration: none;" href="/item/{{ item.id }}/">{{ item }}</a></b></td>
-                <td class="text-center">{{ item.price }}</td>
+                <td class="text-center">{{ item.price }} {{ item.currency }}</td>
                 <td class="text-center">{{ item.amount }}</td>
-                <td class="text-center">{{ item.subtotal }}</td>
+                <td class="text-center">{{ item.subtotal }} {{ item.currency }}</td>
             </tr>
             {% endfor %}
       </tbody>
     </table>
-    {% else %}
-        <p>Корзина пуста.</p>
-    {% endif %}
+
+
         <form action="{% url 'cart_flush' %}" method="GET">
             {% csrf_token %}
             <button type="submit" class="btn btn-outline-danger mt-auto">Очистить корзину</button>
@@ -52,6 +51,9 @@
             {% csrf_token %}
             <button type="submit" class="btn btn-outline-success mt-auto" >Перейти к оформлению заказа</button>
         </form>
+    {% else %}
+        <p>Корзина пуста.</p>
+    {% endif %}
 {% endblock %}
 
 </body>
