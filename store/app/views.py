@@ -112,8 +112,8 @@ def create_checkout_session_many(item_list, country='RU', sale='10', tax=20, cur
         discounts=discounts,
         mode='payment',
         customer=customer,
-        success_url='http://localhost:8000/success',
-        cancel_url='http://localhost:8000/cancel',
+        success_url='https://usm.pythonanywhere.com/success',
+        cancel_url='https://usm.pythonanywhere.com/cancel',
     )
     return checkout_session
 
