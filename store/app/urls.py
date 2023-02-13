@@ -15,4 +15,6 @@ urlpatterns = [
     path('cart_flush/', views.cart_flush, name='cart_flush'),
     path('checkout/', views.checkout, name='checkout'),
     path('checkout/buy/', views.buy_all, name='buy-all'),
+    path('api/buy/<int:pk>/', views.api_buy, name='api-buy'),
+
 ]

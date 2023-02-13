@@ -5,9 +5,8 @@ from django.http import HttpResponseRedirect, HttpResponse
 from django.shortcuts import render, get_object_or_404
 from django.views import generic
 from django.views.decorators.http import require_GET, require_POST
-import random
 
-from .models import Item, Order, Country, Discount, Cart
+from .models import Item, Order, Cart
 
 
 @require_GET
@@ -32,9 +31,24 @@ def buy_one(request, pk):
     Возвращает перенаправление на страницу оплаты напрямую, вместо возвращения session.id + переход с помощью JS
     """
     item_list = Item.objects.filter(pk=pk)
-    session = create_checkout_session_many(item_list)
+    currency = item_list[0].currency
+    session = create_checkout_session_many(item_list, currency=currency)
     return HttpResponseRedirect(session.url)
 
+
+@transaction.atomic
+@require_GET
+def api_buy(request, pk):
+    """
+    Возвращает Session ID для API
+    """
+    item_list = Item.objects.filter(pk=pk)
+    currency = item_list[0].currency
+    session = create_checkout_session_many(item_list, currency=currency)
+    return HttpResponse(session.id)
+
+
+@transaction.atomic
 @require_POST
 def buy_all(request):
     """
@@ -87,7 +101,7 @@ def create_checkout_session_many(item_list, country='RU', sale='10', tax=20, cur
             # Enable this for automated calc of taxes based on chosen Dashboard settings
             'enabled': False,
         },
-        currency=currency,
+        currency=currency,  # Stripe automatic currency conversion is in BETA now. Going works great some later.
         discounts=discounts,
         mode='payment',
         customer=customer,
