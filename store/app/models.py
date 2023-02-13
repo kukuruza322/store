@@ -8,7 +8,6 @@ class Item(models.Model):
     currencies = (
         ("RUB", "RUB"),
         ("USD", "USD"),
-        ("EUR", "EUR"),
     )
     name = models.CharField(max_length=50, verbose_name="Наименование")
     description = models.TextField(max_length=500, verbose_name="Описание")
