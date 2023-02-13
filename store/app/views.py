@@ -48,7 +48,7 @@ def api_buy(request, pk):
     currency = item_list[0].currency
     session = create_checkout_session_many(item_list, currency=currency)
     context = {"session": session}
-    return context
+    return HttpResponse(request)
 
 
 @transaction.atomic
