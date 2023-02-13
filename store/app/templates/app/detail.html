@@ -31,8 +31,44 @@
                 {% csrf_token %}
                 <button type="submit" class="btn btn-outline-dark mt-auto">Заказ в 1 клик</button>
             </form>
+
+            <form>
+                <input id="change_button" type="button" value="Function Alert" onclick='alertFunction()'>
+            </form>
+            <button onclick='alert("Hello there!");'>Inside alert</button>
+            <button id="buy-button">Function fast order</button>
         </div>
     </div>
 {% endblock %}
 </body>
 </html>
+
+
+<script type="text/javascript">
+    var buyButton = document.getElementById('buy-button');
+    buyButton.addEventListener('click', function() {
+        // Call your backend to create the Checkout Session
+        fetch('/123/', {
+          method: 'POST',
+        })
+        .then(function(response) {
+          return response.json();
+        })
+        .then(function(session) {
+          return stripe.redirectToCheckout({ sessionId: session.id });
+        })
+        .then(function(result) {
+          // If `redirectToCheckout` fails due to a browser or network
+          // error, you should display the localized error message to your
+          // customer using `error.message`.
+              if (result.error) {
+                alert(result.error.message);
+              }
+        })
+    })
+
+    function alertFunction() {
+      alert("Hello there!");
+    }
+    document.addEventListener('DOMContentLoaded', alertFunction);
+</script>

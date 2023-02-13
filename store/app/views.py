@@ -28,7 +28,9 @@ class DetailView(generic.DetailView):
 @require_POST
 def buy_one(request, pk):
     """
-    Возвращает перенаправление на страницу оплаты напрямую, вместо возвращения session.id + переход с помощью JS
+    Возвращает объект-ссылку из полученной сессии и перенаправление на страницу оплаты
+    вместо
+    возвращение session.id + переход с помощью JS.
     """
     item_list = Item.objects.filter(pk=pk)
     currency = item_list[0].currency
@@ -37,7 +39,7 @@ def buy_one(request, pk):
 
 
 @transaction.atomic
-@require_GET
+@require_POST
 def api_buy(request, pk):
     """
     Возвращает Session ID для API
@@ -45,7 +47,8 @@ def api_buy(request, pk):
     item_list = Item.objects.filter(pk=pk)
     currency = item_list[0].currency
     session = create_checkout_session_many(item_list, currency=currency)
-    return HttpResponse(session.id)
+    context = {"session": session}
+    return context
 
 
 @transaction.atomic
