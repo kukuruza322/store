@@ -1,11 +1,13 @@
 FROM python:3.8.6
 
 EXPOSE 8000
+
 WORKDIR /img
 
-COPY requirements.txt ./
-RUN pip install -r requirements.txt
-COPY ./store /img
-COPY ./app /img
+COPY . .
 
-CMD ["python", "manage.py", "runserver"]
+RUN pip install -r requirements.txt
+
+CMD python manage.py makemigrations
+CMD python manage.py migrate
+CMD python manage.py runserver 0.0.0.0:8000
